@@ -1,7 +1,7 @@
 // BACKEND API URL
 
 const BASE_URL =
-"http://localhost:3000/api/v1/users";
+"http://localhost:3000/users";
 
 // FORM TYPE
 
