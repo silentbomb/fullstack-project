@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Auth Page</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="form-box">
+
+            <h2 id="formTitle">
+                Login
+            </h2>
+
+            <!-- REGISTER FIELDS -->
+
+            <div id="registerFields" class="hidden">
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter Name"
+                    >
+
+                    <small id="nameError"></small>
+
+                </div>
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        id="phone"
+                        placeholder="Enter Phone Number"
+                    >
+
+                    <small id="phoneError"></small>
+
+                </div>
+
+            </div>
+
+            <!-- EMAIL -->
+
+            <div class="input-group">
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter Email"
+                >
+
+                <small id="emailError"></small>
+
+            </div>
+
+            <!-- PASSWORD -->
+
+            <div class="input-group">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter Password"
+                >
+
+                <small id="passwordError"></small>
+
+            </div>
+
+            <button
+                onclick="handleSubmit()"
+                id="submitBtn"
+            >
+                Login
+            </button>
+
+            <p id="toggleText">
+
+                Don't have an account?
+
+                <span onclick="toggleForm()">
+                    Register here
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
