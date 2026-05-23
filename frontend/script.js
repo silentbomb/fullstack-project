@@ -1,7 +1,6 @@
 // BACKEND API URL
 
-const BASE_URL =
-"http://localhost:3000/users";
+const BASE_URL = "http://localhost:3000/users";
 
 // FORM TYPE
 
@@ -13,48 +12,36 @@ function toggleForm() {
 
     isLogin = !isLogin;
 
-    const formTitle =
-    document.getElementById("formTitle");
-
-    const submitBtn =
-    document.getElementById("submitBtn");
-
-    const toggleText =
-    document.getElementById("toggleText");
-
-    const registerFields =
-    document.getElementById("registerFields");
+    const formTitle = document.getElementById("formTitle");
+    const formSubtitle = document.getElementById("formSubtitle");
+    const submitBtn = document.getElementById("submitBtn");
+    const toggleText = document.getElementById("toggleText");
+    const registerFields = document.getElementById("registerFields");
 
     clearErrors();
 
     if (isLogin) {
 
-        formTitle.innerText = "Login";
-
-        submitBtn.innerText = "Login";
-
-        registerFields.classList.add("hidden");
+        formTitle.innerText = "Welcome back";
+        formSubtitle.innerText = "Sign in to continue to your account";
+        submitBtn.innerText = "Sign in";
+        registerFields.classList.remove("visible");
 
         toggleText.innerHTML = `
             Don't have an account?
-            <span onclick="toggleForm()">
-                Register here
-            </span>
+            <span onclick="toggleForm()">Register here</span>
         `;
 
     } else {
 
-        formTitle.innerText = "Register";
-
+        formTitle.innerText = "Create account";
+        formSubtitle.innerText = "Join us — it only takes a minute";
         submitBtn.innerText = "Register";
-
-        registerFields.classList.remove("hidden");
+        registerFields.classList.add("visible");
 
         toggleText.innerHTML = `
             Already have an account?
-            <span onclick="toggleForm()">
-                Sign In
-            </span>
+            <span onclick="toggleForm()">Sign in</span>
         `;
 
     }
@@ -66,12 +53,25 @@ function toggleForm() {
 function clearErrors() {
 
     document.getElementById("nameError").innerText = "";
-
     document.getElementById("phoneError").innerText = "";
-
     document.getElementById("emailError").innerText = "";
-
     document.getElementById("passwordError").innerText = "";
+
+    document.querySelectorAll('.field input').forEach(function(input) {
+        input.classList.remove('error-input');
+    });
+
+}
+
+// SET ERROR
+
+function setError(fieldId, errorId, msg) {
+
+    const el = document.getElementById(errorId);
+    const input = document.getElementById(fieldId);
+
+    if (el) el.innerText = msg;
+    if (input) input.classList.add('error-input');
 
 }
 
@@ -88,33 +88,18 @@ function validateForm(data) {
     if (!isLogin) {
 
         if (!data.name.trim()) {
-
-            document.getElementById(
-                "nameError"
-            ).innerText = "Name is required";
-
+            setError("name", "nameError", "Name is required");
             isValid = false;
-
         }
 
         // PHONE VALIDATION
 
         if (!data.phone.trim()) {
-
-            document.getElementById(
-                "phoneError"
-            ).innerText = "Phone number is required";
-
+            setError("phone", "phoneError", "Phone number is required");
             isValid = false;
-
         } else if (!/^[0-9]{10}$/.test(data.phone)) {
-
-            document.getElementById(
-                "phoneError"
-            ).innerText = "Phone must be 10 digits";
-
+            setError("phone", "phoneError", "Phone must be 10 digits");
             isValid = false;
-
         }
 
     }
@@ -122,45 +107,21 @@ function validateForm(data) {
     // EMAIL VALIDATION
 
     if (!data.email.trim()) {
-
-        document.getElementById(
-            "emailError"
-        ).innerText = "Email is required";
-
+        setError("email", "emailError", "Email is required");
         isValid = false;
-
-    } else if (
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        .test(data.email)
-    ) {
-
-        document.getElementById(
-            "emailError"
-        ).innerText = "Invalid email format";
-
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        setError("email", "emailError", "Invalid email format");
         isValid = false;
-
     }
 
     // PASSWORD VALIDATION
 
     if (!data.password.trim()) {
-
-        document.getElementById(
-            "passwordError"
-        ).innerText = "Password is required";
-
+        setError("password", "passwordError", "Password is required");
         isValid = false;
-
     } else if (data.password.length < 6) {
-
-        document.getElementById(
-            "passwordError"
-        ).innerText =
-        "Password must be at least 6 characters";
-
+        setError("password", "passwordError", "Password must be at least 6 characters");
         isValid = false;
-
     }
 
     return isValid;
@@ -176,19 +137,10 @@ async function handleSubmit() {
         // GET INPUT VALUES
 
         const data = {
-
-            name:
-            document.getElementById("name").value,
-
-            phone:
-            document.getElementById("phone").value,
-
-            email:
-            document.getElementById("email").value,
-
-            password:
-            document.getElementById("password").value
-
+            name: document.getElementById("name").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
         };
 
         // VALIDATE
@@ -203,43 +155,27 @@ async function handleSubmit() {
 
         if (isLogin) {
 
-            const response = await fetch(
-                `${BASE_URL}/login`,
-                {
-                    method: "POST",
+            const response = await fetch(`${BASE_URL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: data.email,
+                    password: data.password
+                })
+            });
 
-                    headers: {
-                        "Content-Type":
-                        "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        email: data.email,
-                        password: data.password
-                    })
-                }
-            );
-
-            const result =
-            await response.json();
+            const result = await response.json();
 
             if (!response.ok) {
-
                 alert(result.message);
-
                 return;
-
             }
 
             // STORE TOKEN
 
-            localStorage.setItem(
-                "token",
-                result.token
-            );
+            localStorage.setItem("token", result.token);
 
             alert(result.message);
-
             console.log(result);
 
         }
@@ -248,33 +184,20 @@ async function handleSubmit() {
 
         else {
 
-            const response = await fetch(
-                `${BASE_URL}/register`,
-                {
-                    method: "POST",
+            const response = await fetch(`${BASE_URL}/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
 
-                    headers: {
-                        "Content-Type":
-                        "application/json"
-                    },
-
-                    body: JSON.stringify(data)
-                }
-            );
-
-            const result =
-            await response.json();
+            const result = await response.json();
 
             if (!response.ok) {
-
                 alert(result.message);
-
                 return;
-
             }
 
             alert(result.message);
-
             console.log(result);
 
             // SWITCH TO LOGIN
@@ -286,7 +209,6 @@ async function handleSubmit() {
     } catch (error) {
 
         console.log(error);
-
         alert("Something went wrong");
 
     }

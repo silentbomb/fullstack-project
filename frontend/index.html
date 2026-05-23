@@ -1,112 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Auth Page</title>
-
-    <link rel="stylesheet" href="style.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auth Page</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <div class="container">
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
 
-        <div class="form-box">
+<div class="wrapper">
+  <div class="card">
 
-            <h2 id="formTitle">
-                Login
-            </h2>
-
-            <!-- REGISTER FIELDS -->
-
-            <div id="registerFields" class="hidden">
-
-                <div class="input-group">
-
-                    <input
-                        type="text"
-                        id="name"
-                        placeholder="Enter Name"
-                    >
-
-                    <small id="nameError"></small>
-
-                </div>
-
-                <div class="input-group">
-
-                    <input
-                        type="text"
-                        id="phone"
-                        placeholder="Enter Phone Number"
-                    >
-
-                    <small id="phoneError"></small>
-
-                </div>
-
-            </div>
-
-            <!-- EMAIL -->
-
-            <div class="input-group">
-
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter Email"
-                >
-
-                <small id="emailError"></small>
-
-            </div>
-
-            <!-- PASSWORD -->
-
-            <div class="input-group">
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter Password"
-                >
-
-                <small id="passwordError"></small>
-
-            </div>
-
-            <button
-                onclick="handleSubmit()"
-                id="submitBtn"
-            >
-                Login
-            </button>
-
-            <p id="toggleText">
-
-                Don't have an account?
-
-                <span onclick="toggleForm()">
-                    Register here
-                </span>
-
-            </p>
-
-        </div>
-
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
     </div>
 
-    <script src="script.js"></script>
+    <h2 class="card-title" id="formTitle">Welcome back</h2>
+    <p class="card-subtitle" id="formSubtitle">Sign in to continue to your account</p>
 
+    <!-- REGISTER FIELDS -->
+    <div id="registerFields" class="register-fields">
+      <div class="input-row">
+        <div class="field">
+          <label for="name">Full name</label>
+          <input type="text" id="name" placeholder="Jane Smith">
+          <small id="nameError"></small>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="text" id="phone" placeholder="9876543210">
+          <small id="phoneError"></small>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="field">
+      <label for="email">Email address</label>
+      <input type="email" id="email" placeholder="you@example.com">
+      <small id="emailError"></small>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••">
+      <small id="passwordError"></small>
+    </div>
+
+    <button class="submit-btn" onclick="handleSubmit()" id="submitBtn">Sign in</button>
+
+    <p class="toggle-text" id="toggleText">
+      Don't have an account? <span onclick="toggleForm()">Register here</span>
+    </p>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
-
 </html>

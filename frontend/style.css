@@ -1,83 +1,280 @@
-* {
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
 }
 
 body {
-    height: 100vh;
-    background: #f5f5f5;
+    min-height: 100vh;
+    background: #0e0e10;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
 }
 
-.container {
+/* BACKGROUND ORBS */
+
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.18;
+}
+
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    background: #6c63ff;
+    top: -120px;
+    left: -100px;
+    animation: drift1 12s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+    width: 400px;
+    height: 400px;
+    background: #1dcbad;
+    bottom: -100px;
+    right: -80px;
+    animation: drift2 15s ease-in-out infinite alternate;
+}
+
+.orb-3 {
+    width: 250px;
+    height: 250px;
+    background: #ff6b9d;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: drift3 9s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 { to { transform: translate(30px, 40px); } }
+@keyframes drift2 { to { transform: translate(-30px, -40px); } }
+@keyframes drift3 { to { transform: translate(-30px, 30px); } }
+
+/* WRAPPER */
+
+.wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    min-height: 100vh;
+    padding: 40px 16px;
+}
+
+/* CARD */
+
+.card {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 44px 40px 40px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* LOGO */
+
+.logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6c63ff, #1dcbad);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
 }
 
-.form-box {
-    width: 380px;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+.logo svg {
+    width: 22px;
+    height: 22px;
 }
 
-.form-box h2 {
+/* HEADINGS */
+
+.card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: #f0f0f4;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
     text-align: center;
-    margin-bottom: 20px;
 }
 
-.input-group {
-    margin-top: 15px;
+.card-subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 32px;
+    line-height: 1.5;
+    text-align: center;
 }
 
-.input-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
+/* REGISTER FIELDS ANIMATION */
+
+.register-fields {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
 }
 
-.input-group small {
-    color: red;
-    font-size: 13px;
-    margin-top: 5px;
+.register-fields.visible {
+    max-height: 220px;
+    opacity: 1;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* FIELDS */
+
+.field {
+    margin-bottom: 16px;
+}
+
+.field label {
     display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 7px;
 }
 
-button {
+.field input {
     width: 100%;
-    padding: 12px;
-    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #f0f0f4;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+}
+
+.field input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.field input:focus {
+    border-color: rgba(108, 99, 255, 0.7);
+    background: rgba(108, 99, 255, 0.06);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+.field input.error-input {
+    border-color: rgba(255, 80, 80, 0.6);
+}
+
+.field small {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #ff6b6b;
+    min-height: 16px;
+}
+
+/* BUTTON */
+
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
     border: none;
-    background: black;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6c63ff 0%, #4facfe 100%);
     color: white;
-    border-radius: 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 24px rgba(108, 99, 255, 0.35);
 }
 
-button:hover {
-    background: #333;
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
 }
 
-p {
-    margin-top: 15px;
+.submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px rgba(108, 99, 255, 0.45);
+}
+
+.submit-btn:hover::before {
+    opacity: 1;
+}
+
+.submit-btn:active {
+    transform: scale(0.99);
+}
+
+/* TOGGLE TEXT */
+
+.toggle-text {
     text-align: center;
+    margin-top: 22px;
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.35);
 }
 
-span {
-    color: blue;
+.toggle-text span {
+    color: #8b82ff;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s;
 }
+
+.toggle-text span:hover {
+    color: #a89fff;
+}
+
+/* HIDDEN (kept for JS compatibility) */
 
 .hidden {
     display: none;
